@@ -1,16 +1,19 @@
 import React from "react"
-import {useDispatch, useSelector} from 'react-redux';
-import { StateType } from "../../main";
+import { weightChanged } from "./CanvasSlice"
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+// import {useDispatch, useSelector} from 'react-redux';
+// import { StateType } from "../../main";
 
 
 
 export const WeightPicker = () => {
 
-  const weight = useSelector((state: StateType) => state.weight);
-  const dispatch = useDispatch();
 
-  const weightChanged = (ev: React.FormEvent<HTMLInputElement>) => {
-    dispatch({type: '@weight/updated', payload: {weight: parseInt(ev.currentTarget.value)}});
+  const weight = useAppSelector((state) => state.canvas.weight);
+  const dispatch = useAppDispatch();
+
+  const handleWeightChange = (ev: React.FormEvent<HTMLInputElement>) => {
+    dispatch(weightChanged(parseInt(ev.currentTarget.value)));
   }
 
   return (
@@ -18,7 +21,8 @@ export const WeightPicker = () => {
       <label className="form-label">Weight</label>
       <div className="row">
         <div className="col">
-          <input onChange={weightChanged} type="number" className="form-control form-control-color w-100" value={weight}
+          
+          <input onChange={handleWeightChange} type="number" className="form-control form-control-color w-100" value={weight}
             title="Weight" />
         </div>
       </div>

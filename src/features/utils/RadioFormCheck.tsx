@@ -1,11 +1,17 @@
-import React from 'react'
-import { RadioFormCheckProps } from './types'
-
+import React from 'react';
+import { ExportFormats, RadioFormCheckProps } from './types';
+import { useAppDispatch } from '../../app/hooks';
+import { exportFormatChanged } from '../canvas/CanvasSlice';
 
 
 export const RadioFormCheck = (props: RadioFormCheckProps) => {
+  const dispatch = useAppDispatch();
+  
   return (
-    <div>
+    <div onClick={() => {
+      
+      dispatch(exportFormatChanged(document.querySelector(`input[name=${props.formName}]:checked`)?.value as ExportFormats || 'image/png'));
+    }}>
       {
         props.checks.map((check) => (
           <div className="form-check" key={check.id}>
@@ -15,8 +21,6 @@ export const RadioFormCheck = (props: RadioFormCheckProps) => {
               name={props.formName}
               id={check.id}
               value={check.value}
-              defaultChecked={check.checked || false}
-
             />
             <label
               className="form-check-label"

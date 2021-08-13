@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { colorChanged } from "./CanvasSlice";
 // import { StateType } from "../../main";
@@ -16,15 +16,10 @@ export const ColorPicker = () => {
   }
 
   return (
-    <div>
+    <Fragment>
       <label className="form-label">Color</label>
-      <div className="row">
-        <div className="col">
-          <input  onChange={handleColorChange} type="color" className="form-control form-control-color w-100" value={color}
-            title="Color" />
-        </div>
-      </div>
-    </div>
-      
+      <input onChange={handleColorChange} type="color" className="form-control form-control-color w-100" value={color}
+        title="Color" />
+    </Fragment>
   )
 }

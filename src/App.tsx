@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
 import { ColorPicker } from './features/canvas/ColorPicker'
 import { WeightPicker } from './features/canvas/WeightPicker'
 import { ExportFormatPicker } from './features/canvas/ExportFormatPicker'
+import { Canvas } from './features/canvas/Canvas'
+import p5Types from 'p5';
+import { useAppSelector } from './app/hooks';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const exportExtension = useAppSelector((state) => state.canvas.exportFormat.replace('image/', ''));
 
+  const canvas = <Canvas />;
   return (
-    <div className="App container">
-      <div className="row align-items-end">
+    <div className="App container ">
+      <div className="row align-items-end controls">
         <div className="col">
           <ColorPicker></ColorPicker>
         </div>
@@ -22,7 +24,11 @@ function App() {
             type="button"
             className="btn btn-primary w-100"
             onClick={
-              () => console.log('Canvas cleared')
+              () => {
+                const p5 = (window as any).p5;
+                p5.clear();
+                p5.background(220);
+              }
             }>
 
             Clear
@@ -31,12 +37,19 @@ function App() {
         <div className="col">
           <ExportFormatPicker
             handleDownload={
-              () => console.log('canvas downloaded')
+              () => {
+                const p5: p5Types = (window as any).p5;
+                p5.saveCanvas('alejo-drawing', exportExtension.replace('jpeg', 'jpg'));
+              }
             }
           />
         </div>
       </div>
-
+      <div className="row mt-4 canvas">
+        <div className="col">
+          {canvas}
+        </div>
+      </div>
     </div>
   )
 }

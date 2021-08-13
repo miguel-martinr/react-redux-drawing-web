@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { weightChanged } from "./CanvasSlice"
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 // import {useDispatch, useSelector} from 'react-redux';
@@ -17,15 +17,10 @@ export const WeightPicker = () => {
   }
 
   return (
-    <div>
+    <Fragment>
       <label className="form-label">Weight</label>
-      <div className="row">
-        <div className="col">
-          
-          <input onChange={handleWeightChange} type="number" className="form-control form-control-color w-100" value={weight}
-            title="Weight" />
-        </div>
-      </div>
-    </div>  
+      <input onChange={handleWeightChange} type="number" className="form-control form-control-color w-100" value={weight}
+        title="Weight" />
+    </Fragment>
   )
 }

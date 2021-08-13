@@ -1,20 +1,25 @@
 // DUCKS pattern -> get all the logic from one component in a single file
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ExportFormats } from '../utils/types';
 
 // createSlice -> function to define REDUX logic
 // PayloadAction -> ts type repreenting the contents of one given action object
 
 // Shape of the state inside of the slice managed by the reducer 
+
+
 interface CanvasState {
   weight: number,
   color: string,
-  exportFormat: 'image/png' | 'image/jpeg'
+  exportFormat: ExportFormats,
+  mouseIsOverCanvas: boolean
 }
 
 const initialState: CanvasState = {
   weight: 5,
   color: '#000000',
-  exportFormat: 'image/png'
+  exportFormat: 'image/png',
+  mouseIsOverCanvas: false
 }
 
 // Slice that contains the reducer logic
@@ -32,13 +37,25 @@ const canvasSlice = createSlice({
 
     weightChanged(state, action: PayloadAction<number>) {
       state.weight = action.payload;
+    },
+
+    mouseOverCanvas(state) {
+      state.mouseIsOverCanvas = true;
+    },
+
+    mouseOutOfCanvas(state) {
+      state.mouseIsOverCanvas = false;
+    },
+
+    exportFormatChanged(state, action: PayloadAction<ExportFormats>) {
+      state.exportFormat = action.payload;
     }
   }
 
 })
 
 
-export const { colorChanged, weightChanged } = canvasSlice.actions;
+export const { colorChanged, weightChanged, mouseOutOfCanvas, mouseOverCanvas, exportFormatChanged } = canvasSlice.actions;
 export default canvasSlice.reducer;
 
 

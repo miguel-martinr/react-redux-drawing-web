@@ -1,5 +1,4 @@
-import React from "react";
-
+import p5Types from 'p5';
 export interface ButtonProps {
   buttonText: string,
   classes?: string,
@@ -32,3 +31,8 @@ export interface ModalProps {
 export interface ExportFormatPickerProps {
   handleDownload: () => void
 }
+
+export interface CanvasProps {
+}
+
+export type ExportFormats = 'image/png' | 'image/jpeg';

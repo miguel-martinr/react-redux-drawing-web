@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { CloseModalButton } from '../utils/CloseModalButton';
 import { Modal } from '../utils/Modal';
 import { RadioFormCheck } from '../utils/RadioFormCheck';
@@ -36,7 +36,7 @@ export const ExportFormatPicker = (props: ExportFormatPickerProps) => {
   )
 
   return (
-    <div className="col">
+    <Fragment>
       <TriggerModalButton
         buttonText="Download"
         targetId={modalId}
@@ -49,6 +49,7 @@ export const ExportFormatPicker = (props: ExportFormatPickerProps) => {
         modalId={modalId}
         modalTitle="Choose a format"
       />
-    </div>
+    </Fragment>
+
   )
 }

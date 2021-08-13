@@ -1,24 +1,23 @@
-import React, { Fragment } from "react"
+import React, { Fragment } from "react";
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { ColorPickerProps } from "../utils/types";
 import { colorChanged } from "./CanvasSlice";
-// import { StateType } from "../../main";
 
 
 
-export const ColorPicker = () => {
 
-  // const color = useSelector((state: StateType) => state.color);
+export const ColorPicker = (props: ColorPickerProps) => {
+
   const color = useAppSelector((state) => state.canvas.color);
-  const dispatch = useAppDispatch();
+  
 
-  const handleColorChange = (ev: React.FormEvent<HTMLInputElement>) => {
-    dispatch(colorChanged(ev.currentTarget.value));
-  }
 
   return (
     <Fragment>
-      <label className="form-label">Color</label>
-      <input onChange={handleColorChange} type="color" className="form-control form-control-color w-100" value={color}
+      <label className="form-label">{props.title}</label>
+      <input onChange={((ev: React.FormEvent<HTMLInputElement>) => {
+        props.handleColorChange(ev.currentTarget.value);
+      })} type="color" className="form-control form-control-color w-100" value={color}
         title="Color" />
     </Fragment>
   )

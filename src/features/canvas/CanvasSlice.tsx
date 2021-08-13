@@ -1,6 +1,7 @@
 // DUCKS pattern -> get all the logic from one component in a single file
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ExportFormats } from '../utils/types';
+import { Color, ExportFormats } from '../utils/types';
+
 
 // createSlice -> function to define REDUX logic
 // PayloadAction -> ts type repreenting the contents of one given action object
@@ -10,16 +11,18 @@ import { ExportFormats } from '../utils/types';
 
 interface CanvasState {
   weight: number,
-  color: string,
+  color: Color,
   exportFormat: ExportFormats,
-  mouseIsOverCanvas: boolean
+  mouseIsOverCanvas: boolean,
+  backgroundColor: Color,
 }
 
 const initialState: CanvasState = {
   weight: 5,
   color: '#000000',
   exportFormat: 'image/png',
-  mouseIsOverCanvas: false
+  mouseIsOverCanvas: false,
+  backgroundColor: 220,
 }
 
 // Slice that contains the reducer logic
@@ -28,7 +31,7 @@ const canvasSlice = createSlice({
   initialState,
   reducers: {
     // inline object function
-    colorChanged(state, action: PayloadAction<string>) {
+    colorChanged(state, action: PayloadAction<Color>) {
       // Looks like mutating code but it's NOT, due to 
       // immer library -> it tracks mutable code and transforms it into immutable code
       // This is achieved thanks to redux toolskit
@@ -49,13 +52,24 @@ const canvasSlice = createSlice({
 
     exportFormatChanged(state, action: PayloadAction<ExportFormats>) {
       state.exportFormat = action.payload;
-    }
+    },
+
+    backgroundColorChanged(state, action: PayloadAction<Color>) {
+      state.backgroundColor = action.payload;
+    },
   }
 
 })
 
 
-export const { colorChanged, weightChanged, mouseOutOfCanvas, mouseOverCanvas, exportFormatChanged } = canvasSlice.actions;
+export const {
+  colorChanged,
+  weightChanged,
+  mouseOutOfCanvas,
+  mouseOverCanvas,
+  exportFormatChanged,
+  backgroundColorChanged,
+} = canvasSlice.actions;
 export default canvasSlice.reducer;
 
 

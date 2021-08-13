@@ -21,17 +21,22 @@ export const ExportFormatPicker = (props: ExportFormatPickerProps) => {
   );
 
   const modalFooter = (
-    <div>
-      <CloseModalButton
-        buttonText="Cancel"
-      />
+    <div className="row">
+      <div className="col">
       <button
         type="button"
         className="btn btn-primary"
         onClick={props.handleDownload}>
-        
+
         Downlaod
       </button>
+
+      </div>
+      <div className="col">
+        <CloseModalButton
+          buttonText="Cancel"
+        />
+      </div>
     </div>
   )
 

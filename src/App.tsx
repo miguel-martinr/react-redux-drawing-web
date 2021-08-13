@@ -1,20 +1,25 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ColorPicker } from './features/canvas/ColorPicker'
 import { WeightPicker } from './features/canvas/WeightPicker'
 import { ExportFormatPicker } from './features/canvas/ExportFormatPicker'
 import { Canvas } from './features/canvas/Canvas'
 import p5Types from 'p5';
-import { useAppSelector } from './app/hooks';
+import { useAppSelector, useAppDispatch } from './app/hooks';
+import { backgroundColorChanged, colorChanged } from './features/canvas/CanvasSlice'
 
 function App() {
   const exportExtension = useAppSelector((state) => state.canvas.exportFormat.replace('image/', ''));
-
+  const dispatch = useAppDispatch();
   const canvas = <Canvas />;
+
   return (
     <div className="App container ">
       <div className="row align-items-end controls">
         <div className="col">
-          <ColorPicker></ColorPicker>
+          <ColorPicker
+            title="Color"
+            handleColorChange={(color) => dispatch(colorChanged(color))}
+          />
         </div>
         <div className="col">
           <WeightPicker></WeightPicker>
@@ -54,4 +59,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

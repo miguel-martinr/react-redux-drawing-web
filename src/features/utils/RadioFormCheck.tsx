@@ -10,7 +10,8 @@ export const RadioFormCheck = (props: RadioFormCheckProps) => {
   return (
     <div onClick={() => {
       
-      dispatch(exportFormatChanged(document.querySelector(`input[name=${props.formName}]:checked`)?.value as ExportFormats || 'image/png'));
+      const value: ExportFormats = (document.querySelector(`input[name=${props.formName}]:checked`) as any).value;
+      dispatch(exportFormatChanged( value || 'image/png'));
     }}>
       {
         props.checks.map((check) => (

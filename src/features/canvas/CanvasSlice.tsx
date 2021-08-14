@@ -1,6 +1,6 @@
 // DUCKS pattern -> get all the logic from one component in a single file
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Color, ExportFormats } from '../utils/types';
+import { Color, ExportFormats, Line } from '../utils/types';
 
 
 // createSlice -> function to define REDUX logic
@@ -9,12 +9,14 @@ import { Color, ExportFormats } from '../utils/types';
 // Shape of the state inside of the slice managed by the reducer 
 
 
+
 interface CanvasState {
   weight: number,
   color: Color,
   exportFormat: ExportFormats,
   mouseIsOverCanvas: boolean,
   backgroundColor: Color,
+  history: Line[],
 }
 
 const initialState: CanvasState = {
@@ -22,7 +24,8 @@ const initialState: CanvasState = {
   color: '#000000',
   exportFormat: 'image/png',
   mouseIsOverCanvas: false,
-  backgroundColor: 220,
+  backgroundColor: '#DCDCDC',
+  history: []
 }
 
 // Slice that contains the reducer logic
@@ -57,6 +60,14 @@ const canvasSlice = createSlice({
     backgroundColorChanged(state, action: PayloadAction<Color>) {
       state.backgroundColor = action.payload;
     },
+
+    historyLineAdded(state, action: PayloadAction<Line>) {
+      state.history.push(action.payload);
+    },
+
+    historyCleared(state) {
+      state.history = [];
+    }
   }
 
 })
@@ -69,6 +80,8 @@ export const {
   mouseOverCanvas,
   exportFormatChanged,
   backgroundColorChanged,
+  historyLineAdded,
+  historyCleared
 } = canvasSlice.actions;
 export default canvasSlice.reducer;
 

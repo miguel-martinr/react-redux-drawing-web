@@ -38,8 +38,22 @@ export interface CanvasProps {
 
 export type ExportFormats = 'image/png' | 'image/jpeg';
 
-export type Color = string | number;
+export type Color = string;
 export interface ColorPickerProps {
   title: string,
   handleColorChange: (color: Color) => void,
+  color: Color
+}
+
+export interface LineCoords {
+  mouseX: number,
+  mouseY: number,
+  pmouseX: number,
+  pmouseY: number,
+}
+
+export interface Line {
+  coords: LineCoords,
+  color: Color,
+  weight: number
 }

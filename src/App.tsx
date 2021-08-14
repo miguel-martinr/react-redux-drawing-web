@@ -5,10 +5,15 @@ import { ExportFormatPicker } from './features/canvas/ExportFormatPicker'
 import { Canvas } from './features/canvas/Canvas'
 import p5Types from 'p5';
 import { useAppSelector, useAppDispatch } from './app/hooks';
-import { backgroundColorChanged, colorChanged } from './features/canvas/CanvasSlice'
+import { backgroundColorChanged, colorChanged, historyCleared } from './features/canvas/CanvasSlice'
+import { bgNHistory } from './features/utils'
 
 function App() {
-  const exportExtension = useAppSelector((state) => state.canvas.exportFormat.replace('image/', ''));
+  const { backgroundColor, exportFormat, color,  history } = useAppSelector((state) => state.canvas);
+  const exportExtension = exportFormat.replace('image/', '');
+
+
+
   const dispatch = useAppDispatch();
   const canvas = <Canvas />;
 
@@ -19,10 +24,22 @@ function App() {
           <ColorPicker
             title="Color"
             handleColorChange={(color) => dispatch(colorChanged(color))}
+            color={color}
           />
         </div>
         <div className="col">
-          <WeightPicker></WeightPicker>
+        <ColorPicker
+            title="Background Color"
+            handleColorChange={(color) => {
+              dispatch(backgroundColorChanged(color));
+              const p5: p5Types = (window as any).p5;
+              bgNHistory(p5, backgroundColor, history);
+            }}
+            color={backgroundColor}
+          />
+        </div>
+        <div className="col">
+          <WeightPicker />
         </div>
         <div className="col">
           <button
@@ -32,7 +49,8 @@ function App() {
               () => {
                 const p5 = (window as any).p5;
                 p5.clear();
-                p5.background(220);
+                dispatch(historyCleared());
+                p5.background(backgroundColor);
               }
             }>
 

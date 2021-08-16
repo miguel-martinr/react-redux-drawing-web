@@ -7,9 +7,10 @@ import p5Types from 'p5';
 import { useAppSelector, useAppDispatch } from './app/hooks';
 import { backgroundColorChanged, colorChanged, historyCleared } from './features/canvas/CanvasSlice'
 import { bgNHistory } from './features/utils'
+import { UndoButton } from './features/canvas/UndoButton'
 
 function App() {
-  const { backgroundColor, exportFormat, color,  history } = useAppSelector((state) => state.canvas);
+  const { backgroundColor, exportFormat, color, history } = useAppSelector((state) => state.canvas);
   const exportExtension = exportFormat.replace('image/', '');
 
 
@@ -28,7 +29,7 @@ function App() {
           />
         </div>
         <div className="col">
-        <ColorPicker
+          <ColorPicker
             title="Background Color"
             handleColorChange={(color) => {
               dispatch(backgroundColorChanged(color));
@@ -66,6 +67,9 @@ function App() {
               }
             }
           />
+        </div>
+        <div className="col">
+          <UndoButton></UndoButton>
         </div>
       </div>
       <div className="row mt-4 canvas">

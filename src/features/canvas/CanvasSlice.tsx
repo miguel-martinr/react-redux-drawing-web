@@ -67,6 +67,10 @@ const canvasSlice = createSlice({
 
     historyCleared(state) {
       state.history = [];
+    },
+
+    historyPopLine(state) {
+      state.history.pop();
     }
   }
 
@@ -81,7 +85,8 @@ export const {
   exportFormatChanged,
   backgroundColorChanged,
   historyLineAdded,
-  historyCleared
+  historyCleared,
+  historyPopLine,
 } = canvasSlice.actions;
 export default canvasSlice.reducer;
 
